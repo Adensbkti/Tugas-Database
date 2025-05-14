@@ -2,7 +2,7 @@
 class Database {
     public $host = "localhost";
     public $username = "root";
-    public $password = ""; // Change this to your DB password
+    public $password = ""; 
     public $db_name = "perpus";
     public $conn;
 
@@ -24,6 +24,24 @@ class Database {
             }
         }
         return $books;
+    }
+    public function addBook($title, $author, $tahun) {
+        $sql = "INSERT INTO books (judul, author, tahun_terbit) VALUES ('$title', '$author', '$tahun')";
+        return $this->conn->query($sql);
+    }
+    public function getBookById($id) {
+        $sql = "SELECT * FROM books WHERE id='$id'";
+        $result = $this->conn->query($sql);
+        return $result->fetch_assoc();
+    }
+
+    public function updateBook($id, $title, $author, $tahun) {
+        $sql = "UPDATE books SET judul='$title', author='$author', tahun_terbit='$tahun' WHERE id='$id'";
+        return $this->conn->query($sql);
+    }
+    public function deleteBook($id) {
+        $sql = "DELETE FROM books WHERE id='$id'";
+        return $this->conn->query($sql);
     }
 
     public function __destruct() {
